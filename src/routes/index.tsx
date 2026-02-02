@@ -5,5 +5,5 @@ export const Route = createFileRoute('/')({
 })
 
 function App() {
-  return <div className="text-center">AlphaCode Template</div>
+  return <div style={{ textAlign: 'center' }}>AlphaCode Template</div>
 }
