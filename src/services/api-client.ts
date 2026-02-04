@@ -1,4 +1,5 @@
-import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
+import axios from 'axios'
+import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { env } from '@/env'
 
 const API_VERSION = '/api/v1'
@@ -11,6 +12,7 @@ function createApiClient(): AxiosInstance {
   instance.interceptors.request.use(
     (config) => {
       config.headers['Workspace-Id'] = env.VITE_WORKSPACE_ID
+      config.headers['Authorization'] = `Bearer ${env.VITE_API_TOKEN}`
       config.headers['Accept'] = '*/*'
       config.headers['Content-Type'] = 'application/json'
       return config
@@ -51,14 +53,14 @@ export async function apiFetch<PayloadType, ResponseType>({
 
   switch (method) {
     case 'post':
-      return apiClient.post(url, data, config).then((res) => res?.data)
+      return apiClient.post(url, data, config).then((res) => res.data)
     case 'put':
-      return apiClient.put(url, data, config).then((res) => res?.data)
+      return apiClient.put(url, data, config).then((res) => res.data)
     case 'delete':
-      return apiClient.delete(url, config).then((res) => res?.data)
+      return apiClient.delete(url, config).then((res) => res.data)
     case 'patch':
-      return apiClient.patch(url, data, config).then((res) => res?.data)
+      return apiClient.patch(url, data, config).then((res) => res.data)
     default:
-      return apiClient.get(url, config).then((res) => res?.data)
+      return apiClient.get(url, config).then((res) => res.data)
   }
 }
